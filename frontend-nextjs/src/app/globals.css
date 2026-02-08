@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --background: 0.2046 0 0;
+    --foreground: 0.9219 0 0;
+    --card: 0.2686 0 0;
+    --card-foreground: 0.9219 0 0;
+    --popover: 0.2686 0 0;
+    --popover-foreground: 0.9219 0 0;
+    --primary: 0.6231 0.1880 259.8145;
+    --primary-foreground: 1.0000 0 0;
+    --secondary: 0.2686 0 0;
+    --secondary-foreground: 0.9219 0 0;
+    --muted: 0.2393 0 0;
+    --muted-foreground: 0.7155 0 0;
+    --accent: 0.3791 0.1378 265.5222;
+    --accent-foreground: 0.8823 0.0571 254.1284;
+    --destructive: 0.6368 0.2078 25.3313;
+    --destructive-foreground: 1.0000 0 0;
+    --border: 0.3715 0 0;
+    --input: 0.3715 0 0;
+    --ring: 0.6231 0.1880 259.8145;
+    --chart-1: 0.7137 0.1434 254.6240;
+    --chart-2: 0.6231 0.1880 259.8145;
+    --chart-3: 0.5461 0.2152 262.8809;
+    --chart-4: 0.4882 0.2172 264.3763;
+    --chart-5: 0.4244 0.1809 265.6377;
+    --sidebar-bg: 0.2046 0 0;
+    --sidebar-fg: 0.9219 0 0;
+    --sidebar-primary: 0.6231 0.1880 259.8145;
+    --sidebar-border: 0.3715 0 0;
+    --radius: 0.375rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  background: oklch(0.2046 0 0) !important;
+  border-radius: var(--radius);
+}
+.leaflet-control-attribution {
+  background: oklch(0.2686 0 0 / 0.85) !important;
+  color: oklch(0.7155 0 0) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a { color: oklch(0.6231 0.1880 259.8145) !important; }
+.leaflet-control-zoom a {
+  background: oklch(0.2686 0 0) !important;
+  color: oklch(0.9219 0 0) !important;
+  border-color: oklch(0.3715 0 0) !important;
+}
+.leaflet-popup-content-wrapper {
+  background: oklch(0.2686 0 0) !important;
+  color: oklch(0.9219 0 0) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px oklch(0 0 0 / 0.4) !important;
+}
+.leaflet-popup-tip { background: oklch(0.2686 0 0) !important; }
+
+.route-marker {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0a0a0a;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35), 0 0 12px rgba(0, 0, 0, 0.4);
+}
+.route-marker--start { background: #22c55e; }
+.route-marker--end { background: #f97316; }
+
+.route-input {
+  background: oklch(0.31 0 0) !important;
+  color: oklch(0.98 0 0) !important;
+  border-color: oklch(0.46 0 0) !important;
+  color-scheme: dark;
+}
+.route-input:focus {
+  outline: none;
+  border-color: oklch(0.62 0.18 259.8) !important;
+  box-shadow: 0 0 0 2px oklch(0.62 0.18 259.8 / 0.25);
+}
+.route-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, oklch(0.9 0 0) 50%),
+    linear-gradient(135deg, oklch(0.9 0 0) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 10px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 28px !important;
+}
+input[type="date"].route-input::-webkit-calendar-picker-indicator,
+input[type="time"].route-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(2) !important;
+  opacity: 1 !important;
+  cursor: pointer;
+}
+/* Firefox fallback */
+input[type="date"].route-input::-moz-calendar-picker-indicator,
+input[type="time"].route-input::-moz-calendar-picker-indicator {
+  filter: invert(1) brightness(2) !important;
+  opacity: 1 !important;
+}
+input[type="date"].route-input::-webkit-datetime-edit,
+input[type="time"].route-input::-webkit-datetime-edit {
+  color: oklch(0.98 0 0);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: oklch(0.2046 0 0); }
+::-webkit-scrollbar-thumb { background: oklch(0.3715 0 0); border-radius: 3px; }
+
+.shap-scroll::-webkit-scrollbar { width: 4px; }
+.shap-scroll::-webkit-scrollbar-track { background: transparent; }
+.shap-scroll::-webkit-scrollbar-thumb { background: oklch(0.45 0 0); border-radius: 2px; }
+.shap-scroll::-webkit-scrollbar-thumb:hover { background: oklch(0.55 0 0); }
+.shap-scroll { scrollbar-width: thin; scrollbar-color: oklch(0.45 0 0) transparent; }
+
+/* Recharts overrides */
+.recharts-cartesian-grid line { stroke: oklch(0.3715 0 0) !important; }
+.recharts-default-tooltip {
+  background: #1a1a1a !important;
+  border: 1px solid #444 !important;
+  color: #eee !important;
+}
+.recharts-cursor { fill: transparent !important; }
+.recharts-active-bar { fill: inherit !important; opacity: 1 !important; }
+
+/* Observable Plot tip overrides */
+[class*="plot-"] figure,
+[class*="plot-"] svg { color: #e0e0e0; }
+.plot-tip, [aria-label="tip"] {
+  --plot-background: #1a1a1a;
+  color: #eee;
+  font-size: 12px;
+}

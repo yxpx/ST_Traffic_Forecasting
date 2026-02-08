@@ -1,0 +1,7 @@
+{
+  "/feature-attribution/page": "app/feature-attribution/page.js",
+  "/model-performance/page": "app/model-performance/page.js",
+  "/cctv-analytics/page": "app/cctv-analytics/page.js",
+  "/page": "app/page.js",
+  "/prediction-analysis/page": "app/prediction-analysis/page.js"
+}

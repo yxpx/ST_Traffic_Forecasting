@@ -1,0 +1,9 @@
+{
+  "camera_zone_01": [
+    {"sensor_id": "773869", "weight": 1.0, "type": "direct"}
+  ],
+  "camera_zone_02_complex_intersection": [
+    {"sensor_id": "767541", "weight": 0.6, "type": "split_flow"},
+    {"sensor_id": "767542", "weight": 0.4, "type": "split_flow"}
+  ]
+}
