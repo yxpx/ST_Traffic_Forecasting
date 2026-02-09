@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+/lib/
 lib64/
 parts/
 sdist/
@@ -70,8 +70,11 @@ desktop.ini
 # Frontend
 node_modules/
 frontend/node_modules/
-frontend/.next
+frontend/.next/
+frontend/out/
 
+# Ruff (Python linter)
+.ruff_cache/
 
 # Environment variables
 .env
