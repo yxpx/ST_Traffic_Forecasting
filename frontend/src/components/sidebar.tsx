@@ -42,7 +42,7 @@ export function Sidebar() {
         ))}
       </nav>
       <div className="p-4 border-t border-border">
-        <p className="text-[10px] text-muted-foreground">SimpleSTGCN · 30 epochs</p>
+        <p className="text-[10px] text-muted-foreground">ST Traffic Forecasting</p>
       </div>
     </aside>
   );
