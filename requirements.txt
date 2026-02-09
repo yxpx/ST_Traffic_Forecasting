@@ -1,0 +1,15 @@
+fastapi==0.128.5
+h5py==3.15.1
+kagglehub==0.4.3
+networkx==3.6.1
+numpy==2.4.2
+opencv_python==4.13.0.92
+pandas==3.0.0
+plotly==6.3.0
+pydantic==2.12.5
+shap==0.49.1
+streamlit==1.50.0
+supervision==0.27.0
+torch==2.10.0
+ultralytics==8.4.12
+uvicorn==0.36.0

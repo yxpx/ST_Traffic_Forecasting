@@ -1,6 +1,6 @@
 """
 Generate full sensor time series (200 steps) in mph for the Next.js frontend.
-Outputs frontend-nextjs/public/timeseries-data.json.
+Outputs frontend/public/timeseries-data.json.
 """
 import json
 import os
@@ -12,12 +12,12 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 
 from models.stgcn_model import SimpleSTGCN
-from src.data_loader import create_feature_bundle, load_metr_la
+from backend.data_loader import create_feature_bundle, load_metr_la
 
 WINDOW = 12
 HORIZON = 3
 STEPS = 200
-OUT_PATH = os.path.join(ROOT, "frontend-nextjs", "public", "timeseries-data.json")
+OUT_PATH = os.path.join(ROOT, "frontend", "public", "timeseries-data.json")
 
 
 def main() -> None:

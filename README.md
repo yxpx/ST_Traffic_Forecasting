@@ -1,81 +1,74 @@
-# OnTime - Spatio-Temporal Traffic Forecasting
+# ST_Traffic_Forecasting
 
-A compact pipeline for short-term traffic forecasting that fuses historical graph signals with optional camera-derived inputs and supports explainability.
+Short-term traffic forecasting with a spatio-temporal graphical convolutional network (ST-GCN) model, a FastAPI backend, and a Next.js dashboard. The backend fuses historical graph signals and optional camera inputs. Pre-trained weights are included.
 
-Pre-trained weights are included. You can run the forecast API and dashboard immediately without retraining.
+## Repo layout
 
-## Repository Layout (Current)
+- backend for the API and training
+- frontend for the Next.js dashboard
+- data/raw for dataset files
+- models for weights and model code
+- scripts for data generation helpers
+- assets/vision for the CV tools
 
-```text
-/OnTime
-├── data/
-│   ├── mappings/
-│   │   ├── cam_to_sensor.json
-│   │   └── la_boundary.geojson
-│   └── raw/
-│       ├── adj_METR-LA.pkl
-│       ├── METR-LA.h5
-│       └── weather_CA_2019.csv
-├── frontend-nextjs/
-│   ├── public/
-│   ├── src/
-│   ├── next-env.d.ts
-│   ├── next.config.js
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── postcss.config.js
-│   ├── tailwind.config.ts
-│   └── tsconfig.json
-├── models/
-│   ├── shap_explainer.py
-│   ├── stgcn_model.py
-│   └── stgcn_weights.pt
-├── reports/
-│   └── metrics.csv
-├── scripts/
-│   ├── generate_dashboard_data.py
-│   └── generate_sensor_locations.py
-├── src/
-│   ├── api.py
-│   ├── data_loader.py
-│   ├── map_matcher.py
-│   └── train.py
-├── .gitignore
-├── README.md
-└── requirements.txt
-```
+## Setup
 
-Generated folders (not tracked): frontend-nextjs/.next, frontend-nextjs/node_modules, Python __pycache__
-
-## Quick Start
-
-### 1. Install Python dependencies
+### 1. Python env (uv)
 
 ```powershell
-python -m pip install -r requirements.txt
+uv venv .venv
+uv pip install -r requirements.txt
 ```
 
-### 2. Start the backend API
+### 2. Download METR-LA data
+
+Dataset: https://www.kaggle.com/datasets/annnnguyen/metr-la-dataset
 
 ```powershell
-uvicorn src.api:app --reload
+uv pip install kagglehub
+python scripts\download_metr_la.py
 ```
 
-### 3. Start the frontend dashboard
+This script places the dataset files into data/raw.
+
+### 3. Weather data
+
+Default path is data/raw/weather_CA_2019.csv. The backend reads this through the WEATHER_PATH environment variable and training uses --weather.
+
+If your weather file does not align with the METR-LA time range, it will bias the features. For clean experiments, either provide a matched file or disable weather by setting WEATHER_PATH to an empty value.
+
+### 4. Start the backend API
 
 ```powershell
-cd frontend-nextjs
-npm install
-npm run dev
+uvicorn backend.api:app --reload
 ```
 
-## Optional: Retrain the model
+### 5. Start the frontend dashboard
 
 ```powershell
-python -u src\train.py --epochs 30 --batch 64 --window 12 --horizon 3
+cd frontend
+pnpm install
+pnpm dev
 ```
 
-## Notes
+## Weights
 
-- The API uses models/stgcn_weights.pt by default.
-- Raw data files live under data/raw.
+- models/stgcn_weights.pt is used by default for forecasting
+- models/yolov8n.pt is used for CCTV detection
+
+## Data generation scripts
+
+- scripts/generate_timeseries_data.py writes frontend/public/timeseries-data.json
+- scripts/generate_heatmap_data.py writes frontend/public/heatmap-data.json
+- scripts/generate_sensor_locations.py writes frontend/public/sensor-locations.json
+- scripts/generate_dashboard_data.py writes frontend-observable/src outputs
+
+## Training
+
+```powershell
+python -u backend\train.py --epochs 30 --batch 64 --window 12 --horizon 3
+```
+
+## License
+
+MIT

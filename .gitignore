@@ -69,8 +69,9 @@ desktop.ini
 
 # Frontend
 node_modules/
-frontend-nextjs/node_modules/
-# frontend-observable/node_modules/
+frontend/node_modules/
+frontend/.next
+
 
 # Environment variables
 .env
@@ -89,4 +90,5 @@ temp/
 
 info.md 
 
-/data/raw/
+/data/raw/*
+!/data/raw/weather_CA_2019.csv

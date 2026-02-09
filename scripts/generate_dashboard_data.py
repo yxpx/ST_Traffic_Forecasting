@@ -2,7 +2,7 @@
 Generate dashboard data: prediction samples, feature importance, error analysis.
 Outputs JSON files for the Observable frontend.
 """
-import json, os, sys
+import json, os, sys, csv
 import numpy as np
 import torch
 
@@ -10,7 +10,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 
 from models.stgcn_model import SimpleSTGCN
-from src.data_loader import create_feature_bundle
+from backend.data_loader import create_feature_bundle
 
 WINDOW = 12
 HORIZON = 3
@@ -100,6 +100,21 @@ def main():
         "p90": float(np.percentile(abs_errors, 90)),
         "p95": float(np.percentile(abs_errors, 95)),
     }
+
+    # Override MAE / RMSE / val_loss from training metrics.csv so they match
+    # the Model Performance page exactly (single source of truth).
+    metrics_csv = os.path.join(ROOT, "reports", "metrics.csv")
+    if os.path.exists(metrics_csv):
+        with open(metrics_csv) as f:
+            rows = list(csv.DictReader(f))
+        if rows:
+            last = rows[-1]
+            error_stats["mae"] = float(last["val_mae"])
+            error_stats["rmse"] = float(last["val_rmse"])
+            error_stats["val_loss"] = float(last["val_loss"])
+            print(f"  Using metrics.csv epoch {last['epoch']}: MAE={error_stats['mae']:.4f}, RMSE={error_stats['rmse']:.4f}")
+    else:
+        print("  WARNING: reports/metrics.csv not found — using sampled error stats")
     # Histogram bins
     hist_counts, hist_edges = np.histogram(errors, bins=50)
     error_hist = [{"bin_start": float(hist_edges[i]), "bin_end": float(hist_edges[i+1]),

@@ -1,6 +1,6 @@
 """
 Generate sensor × hour heatmap data in mph for the Next.js frontend.
-Outputs frontend-nextjs/public/heatmap-data.json.
+Outputs frontend/public/heatmap-data.json.
 """
 import json
 import os
@@ -12,14 +12,14 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 
 from models.stgcn_model import SimpleSTGCN
-from src.data_loader import create_feature_bundle, load_metr_la
+from backend.data_loader import create_feature_bundle, load_metr_la
 
 WINDOW = 12
 HORIZON = 3
 HOURS = 24
 STEPS_PER_HOUR = 12  # 5-min intervals
 STEPS = HOURS * STEPS_PER_HOUR
-OUT_PATH = os.path.join(ROOT, "frontend-nextjs", "public", "heatmap-data.json")
+OUT_PATH = os.path.join(ROOT, "frontend", "public", "heatmap-data.json")
 
 
 def main() -> None:

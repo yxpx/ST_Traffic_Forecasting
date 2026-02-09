@@ -201,7 +201,7 @@ print(f"Lng range: {min(lngs):.4f} – {max(lngs):.4f}")
 # ── 6. Write output ──────────────────────────────────────────────────────
 output = {"sensors": sensors, "edges": edges}
 
-for out in ["frontend-observable/src/sensor-locations.json", "frontend-nextjs/public/sensor-locations.json"]:
+for out in ["frontend-observable/src/sensor-locations.json", "frontend/public/sensor-locations.json"]:
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w") as f:
         json.dump(output, f)
